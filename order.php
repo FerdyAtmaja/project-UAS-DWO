@@ -79,7 +79,7 @@
                                                 Total Harga Satuan</div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800">
                                                 <?php
-                                                    $query = mysqli_query($conn,"SELECT SUM(UnitPrice) as total_unitprice from salesorderdetail where UnitPrice IN (SELECT UnitPrice from salesorderdetail group by ProductID);");
+                                                    $query = mysqli_query($conn,"SELECT SUM(UnitPrice) as total_unitprice from fact_sales where UnitPrice IN (SELECT UnitPrice from fact_sales group by ProductID);");
                                                         while($row=mysqli_fetch_array($query)){
                                                             echo '$'. number_format($row['total_unitprice'],0,".",",");
                                                     }
@@ -109,35 +109,6 @@
                                                             $query = mysqli_query($conn,"SELECT SUM(OrderQty) as produk_terjual from fact_sales");
                                                                 while($row=mysqli_fetch_array($query)){
                                                                     echo number_format($row['produk_terjual'],0,".",",");
-                                                            }
-                                                        ?>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Total Diskon Harga Satuan -->
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-info shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Total Diskon Diberikan
-                                            </div>
-                                            <div class="row no-gutters align-items-center">
-                                                <div class="col-auto">
-                                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">
-                                                        <?php
-                                                            $query = mysqli_query($conn,"SELECT SUM(UnitPriceDiscount) as total_diskon from salesorderdetail");
-                                                                while($row=mysqli_fetch_array($query)){
-                                                                    echo '$'. number_format($row['total_diskon'],0,".",",");
                                                             }
                                                         ?>
                                                     </div>
