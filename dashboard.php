@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Adventure Works - Customer</title>
+    <title>Adventure Works - Dashboard</title>
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -22,8 +22,6 @@
     <?php
     include "connect.php";
 
-    // $query = mysqli_query($conn, 'SELECT count(*) as count FROM customer');
-    // $row = mysqli_fetch_array($query);
     ?>
 
 
@@ -206,57 +204,20 @@
                         <div class="card shadow mb-4">
                             <!-- Card Header-->
                             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                <h6 class="m-0 font-weight-bold text-primary">Top 10 Customer Dengan Order Terbanyak</h6>
+                                <h6 class="m-0 font-weight-bold text-primary">Persentase Penjualan - Semua Wilayah</h6>
                             </div>
                             <!-- Card Body -->
                             <div class="card-body">
-                                <div class="chart-pie pt-4 pb-2">
-                                    <canvas id="myPieChart"></canvas>
-                                </div>
-                                <div class="mt-4 text-center small">
-                                    <?php
-                                    $sql = mysqli_query($conn, "SELECT DISTINCT(customerid), Sum(orderqty) AS jumlah FROM fact_sales GROUP BY customerid ORDER BY jumlah DESC limit 10");
-                                    $data = $sql->fetch_array();
-                                    $customerID[] = $data['customerID'];
-                                    ?>
-                                    <span class="mr-2">
-                                        <i class="fas fa-circle text-primary"></i>
-                                    </span>
-                                    <span class="mr-2">
-                                        <i class="fas fa-circle text-success"></i> Social
-                                    </span>
-                                    <span class="mr-2">
-                                        <i class="fas fa-circle text-info"></i> Referral
-                                    </span>
-                                    <span class="mr-2">
-                                        <i class="fas fa-circle text-primary"></i> Direct
-                                    </span>
-                                    <span class="mr-2">
-                                        <i class="fas fa-circle text-success"></i> Social
-                                    </span>
-                                    <span class="mr-2">
-                                        <i class="fas fa-circle text-info"></i> Referral
-                                    </span>
-                                    <span class="mr-2">
-                                        <i class="fas fa-circle text-primary"></i> Direct
-                                    </span>
-                                    <span class="mr-2">
-                                        <i class="fas fa-circle text-success"></i> Social
-                                    </span>
-                                    <span class="mr-2">
-                                        <i class="fas fa-circle text-info"></i> Referral
-                                    </span>
-                                    <span class="mr-2">
-                                        <i class="fas fa-circle text-info"></i> Referral
-                                    </span>
-                                </div>
+                                <?php include "drilldown.php" ?>
                             </div>
                         </div>
                     </div>
                 </div>
 
+
             </div>
             <!-- /.container-fluid -->
+
 
         </div>
         <!-- End of Main Content -->
