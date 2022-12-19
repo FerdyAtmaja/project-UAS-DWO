@@ -38,18 +38,22 @@
                         <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
                     </div>
 
-                    <!-- Content Row -->
+                    <!-- A. Content Row -->
                     <div class="row">
 
-                        <!-- Earnings (Monthly) Card Example -->
+                        <!-- Total Vendor dan Product -->
                         <div class="col-xl-3 col-md-6 mb-4">
                             <div class="card border-left-primary shadow h-100 py-2">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                Earnings (Monthly)</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                                                Total Vendor (All Time)</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?php
+                                            include "connect.php";
+                                            $query = mysqli_query($conn, 'SELECT count(*) as count FROM vendor');
+                                            $row = mysqli_fetch_array($query);
+                                            echo $row['count']?></div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-calendar fa-2x text-gray-300"></i>
@@ -59,15 +63,20 @@
                             </div>
                         </div>
 
-                        <!-- Earnings (Monthly) Card Example -->
+                        <!-- Total Product (All time) -->
                         <div class="col-xl-3 col-md-6 mb-4">
                             <div class="card border-left-success shadow h-100 py-2">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                                Earnings (Annual)</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">$215,000</div>
+                                                Total Product (All Time)</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?php
+                                            include "connect.php";
+
+                                            $query = mysqli_query($conn, 'SELECT count(*) as count FROM product');
+                                            $row = mysqli_fetch_array($query);
+                                            echo $row['count']?></div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
@@ -123,7 +132,7 @@
                         </div>
                     </div>
 
-                    <!-- Content Row -->
+                    <!-- B. Content Row (Grafik) -->
 
                     <div class="row">
 
@@ -132,7 +141,7 @@
                             <div class="card shadow mb-4">
                                 <!-- Card Header - Dropdown -->
                                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-primary">Earnings Overview</h6>
+                                    <h6 class="m-0 font-weight-bold text-primary">Vendor yang mengelola pembelian terbesar</h6>
                                     <div class="dropdown no-arrow">
                                         <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
@@ -160,7 +169,8 @@
                             <div class="card shadow mb-4">
                                 <!-- Card Header - Dropdown -->
                                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-primary">Revenue Sources</h6>
+                                    <h6 class="m-0 font-weight-bold text-primary">Persebaran Vendor di tiap Wilayah</h6>
+                                    
                                     <div class="dropdown no-arrow">
                                         <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
@@ -181,14 +191,42 @@
                                     </div>
                                     <div class="mt-4 text-center small">
                                         <span class="mr-2">
-                                            <i class="fas fa-circle text-primary"></i> Direct
+                                            <i class="fas fa-circle text-primary"></i> Cargo Transport 5
                                         </span>
                                         <span class="mr-2">
-                                            <i class="fas fa-circle text-success"></i> Social
+                                            <i class="fas fa-circle text-success"></i> Overnight J-Fast
                                         </span>
                                         <span class="mr-2">
-                                            <i class="fas fa-circle text-info"></i> Referral
+                                            <i class="fas fa-circle text-info"></i> Overseas-Deluxe
                                         </span>
+                                        <span class="mr-2">
+                                            <i class="fas fa-circle text-info"></i> ZY-Express
+                                        </span>
+                                        <span class="mr-2">
+                                            <i class="fas fa-circle text-info"></i> XRQ-Truck Ground
+                                        </span>
+                                    </div>
+                                    <div>
+                                        <?php
+                                            $host       = "localhost";
+                                            $user       = "root";
+                                            $password   = "";
+                                            $database   = "dwouts";
+                                            $mysqli     = mysqli_connect($host, $user, $password, $database);
+
+                                            $ShipMethodID = mysqli_query($mysqli,"SELECT DISTINCT(ShipMethodID), COUNT(VendorID) as VendorID FROM fact_purchase WHERE ShipMethodID IS NOT NULL AND ShipMethodID > 0 GROUP BY ShipMethodID ORDER BY VendorID DESC");
+                                            while($row = mysqli_fetch_array($ShipMethodID)){
+                                                $jenis_ship[] = $row['ShipMethodID'];
+
+                                                $query = mysqli_query($mysqli,"SELECT COUNT(VendorID) as VendorID FROM fact_purchase WHERE ShipMethodID IS NOT NULL AND ShipMethodID > 0 AND ShipMethodID='".$row['ShipMethodID']."'");
+                                                $row = $query->fetch_array();
+                                                $vendor[] = $row['VendorID'];
+                                            };
+                                            ?>
+                                            <figure class="highcharts-figure">
+                                                <div id="container"></div>
+                                                <p class="highcharts-description"></p>
+                                            </figure>
                                     </div>
                                 </div>
                             </div>
@@ -227,7 +265,19 @@
 
     <!-- Page level custom scripts -->
     <script src="js/demo/chart-area-demo.js"></script>
-    <script src="js/demo/chart-pie-demo.js"></script>
+    <script src="vendor/js/chart-pie-vendor.js"></script>
+
+
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/data.js"></script>
+    <script src="https://code.highcharts.com/modules/drilldown.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+    <!-- <link rel="stylesheet" href="/drilldown.css"/> -->
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.js"></script>
+    <!---->
 
 
 </body>
