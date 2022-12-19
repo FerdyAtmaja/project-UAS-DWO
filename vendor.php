@@ -233,6 +233,51 @@
                         </div>
                     </div>
 
+                    <!-- C. Table Content Row -->
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">
+                                Data Vendor
+                                </h6>
+                            </div>
+                            <!-- /.card-header -->
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
+                                        <thead>
+                                        <tr>
+                                            <th>Vendor ID</th>
+                                            <th>Account Number</th>
+                                            <th>Name</th>
+                                        </tr>
+                                        </thead>
+                                        <tfoot>
+                                        <tr>
+                                            <th>Vendor ID</th>
+                                            <th>Account Number</th>
+                                            <th>Name</th>
+                                        </tr>
+                                        </tfoot>
+                                        <tbody>
+                                        <?php
+                                            include "connect.php";
+
+                                            $query = mysqli_query($conn, 'SELECT *  FROM vendor where VendorID');
+                                            while ($data = mysqli_fetch_array($query)) {
+                                        ?>
+                                        <tr>
+                                            <td><?php echo $data['VendorID'] ?></td>
+                                            <td><?php echo $data['AccountNumber'] ?></td>
+                                            <td><?php echo $data['Name'] ?></td>
+                                        </tr>
+                                        <?php 
+                                            }
+                                        ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
                 </div>
                 <!-- /.container-fluid -->
 
@@ -278,6 +323,39 @@
     <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.js"></script>
     <!---->
+
+
+    <!-- DataTables  & Plugins -->
+<script src="../../plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="../../plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="../../plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="../../plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+<script src="../../plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+<script src="../../plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+<script src="../../plugins/jszip/jszip.min.js"></script>
+<script src="../../plugins/pdfmake/pdfmake.min.js"></script>
+<script src="../../plugins/pdfmake/vfs_fonts.js"></script>
+<script src="../../plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+<script src="../../plugins/datatables-buttons/js/buttons.print.min.js"></script>
+<script src="../../plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+
+    <script>
+  $(function () {
+    $("#dataTable").DataTable({
+      "responsive": true, "lengthChange": false, "autoWidth": false,
+      "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+    }).buttons().container().appendTo('#dataTable_wrapper .col-md-6:eq(0)');
+    $('#dataTable').DataTable({
+      "paging": true,
+      "lengthChange": false,
+      "searching": false,
+      "ordering": true,
+      "info": true,
+      "autoWidth": false,
+      "responsive": true,
+    });
+  });
+</script>
 
 
 </body>
