@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 
+<head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
+</head>
+
 <body>
     <!-- Sidebar -->
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
@@ -20,36 +24,36 @@
         <li class="nav-item">
             <a class="nav-link" href="dashboard.php">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
-                <span>Dashboard</span></a>
+                <span class="font-weight-bold">Dashboard</span></a>
         </li>
 
 
         <!-- Nav Item - Charts -->
         <li class="nav-item">
             <a class="nav-link" href="order.php">
-                <i class="fas fa-fw fa-chart-area"></i>
-                <span>Order Chart</span></a>
+                <i class="bi bi-cart3"></i>
+                <span class="font-weight-bold">Order Chart</span></a>
         </li>
 
         <!-- Nav Item - Charts -->
         <li class="nav-item">
             <a class="nav-link" href="purchase.php">
-                <i class="fas fa-fw fa-chart-area"></i>
-                <span>Purchase Chart</span></a>
+                <i class="bi bi-receipt"></i>
+                <span class="font-weight-bold">Purchase Chart</span></a>
         </li>
 
         <!-- Nav Item - Charts -->
         <li class="nav-item">
             <a class="nav-link" href="customer.php">
-                <i class="fas fa-fw fa-chart-area"></i>
-                <span>Customer Chart</span></a>
+                <i class="bi bi-people-fill"></i>
+                <span class="font-weight-bold">Customer Chart</span></a>
         </li>
 
         <!-- Nav Item - Charts -->
         <li class="nav-item">
             <a class="nav-link" href="vendor.php">
-                <i class="fas fa-fw fa-chart-area"></i>
-                <span>Vendor Chart</span></a>
+                <i class="bi bi-building-fill"></i>
+                <span class="font-weight-bold">Vendor Chart</span></a>
         </li><br>
 
         <!-- Heading -->
@@ -60,8 +64,8 @@
         <!-- Nav Item - Tables -->
         <li class="nav-item">
             <a class="nav-link" href="mondrian.php">
-                <i class="fas fa-fw fa-table"></i>
-                <span>Mondrian</span></a>
+                <i class="bi bi-database-fill"></i>
+                <span class="font-weight-bold">Mondrian</span></a>
         </li>
 
         <!-- Divider -->
