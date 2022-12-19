@@ -146,10 +146,10 @@ foreach ($data_det[0] as $a) {
                 type: 'pie'
             },
             title: {
-                text: 'Persentase Nilai Penjualan - Semua Wilayah'
+                text: 'Klik di potongan kue untuk melihat detil nilai penjualan setiap wilayah berdasarkan bulan'
             },
             subtitle: {
-                text: 'Klik di potongan kue untuk melihat detil nilai penjualan setiap wilayah berdasarkan bulan'
+                text: ''
             },
 
             accessibility: {

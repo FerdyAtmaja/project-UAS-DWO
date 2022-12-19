@@ -143,7 +143,7 @@
                             </div>
                         </div>
 
-                        <!-- Pie Chart -->
+                        <!-- doughnut Chart -->
                         <div class="col-xl-4 col-lg-5">
                             <div class="card shadow mb-4">
                                 <!-- Card Header-->
@@ -198,7 +198,7 @@
                         </div>
                     </div>
 
-                    <!-- Content Row -->
+                    <!-- Content Table -->
                         <div class="card shadow mb-4">
                             <div class="card-header py-3">
                                 <h6 class="m-0 font-weight-bold text-primary">
@@ -353,7 +353,7 @@ function number_format(number, decimals, dec_point, thousands_sep) {
     return s.join(dec);
 }
 
-// Area Chart Example
+// line Chart Script
 var ctx = document.getElementById("myAreaChart");
 var myLineChart = new Chart(ctx, {
     type: 'line',
@@ -443,7 +443,7 @@ var myLineChart = new Chart(ctx, {
     }
 });
 
-// Pie Chart Script
+// doughnut Chart Script
 var ctx = document.getElementById("myPieChart");
 var myPieChart = new Chart(ctx, {
   type: "doughnut",
