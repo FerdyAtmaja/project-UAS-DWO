@@ -91,7 +91,7 @@
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Pembelian Produk pada Vendor (Monthly)
+                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Jumlah Produk yang Dibeli Pada Vendor (Monthly)
                                             </div>
                                             <div class="row no-gutters align-items-center">
                                                 <div class="col-auto">
@@ -125,7 +125,7 @@
 
                                             $query = mysqli_query($conn, 'SELECT ROUND(SUM(SubTotal)/3, 2) as avg FROM fact_purchase');
                                             $row = mysqli_fetch_array($query);
-                                            echo $row['avg']?></div>
+                                            echo '$' . $row['avg']?></div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-comments fa-2x text-gray-300"></i>
@@ -145,7 +145,7 @@
                         <div class="card shadow mb-4">
                             <!-- Card Header - Dropdown -->
                             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                <h6 class="m-0 font-weight-bold text-primary">Vendor yang mengelola pembelian terbesar</h6>
+                                <h6 class="m-0 font-weight-bold text-primary">Vendor yang Menerima Pembelian Terbesar</h6>
                                 <div class="dropdown no-arrow">
                                     <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
