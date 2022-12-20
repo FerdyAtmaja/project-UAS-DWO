@@ -11,7 +11,7 @@ var myPieChart = new Chart(ctx, {
     labels: ["Cargo Transport 5", "Overnight J-Fast", "Overseas-Deluxe", "ZY-Express", "XRQ-Truck Ground"],
     datasets: [
       {
-        data: [6.450, 5.970, 5.74, 2.548, 2.034],
+        data: [32, 92, 83, 38, 93],
         backgroundColor: ["#4e73df", "#1cc88a", "#36b9cc", "#FAC898"],
         hoverBackgroundColor: ["#2e59d9", "#17a673", "#2c9faf"],
         hoverBorderColor: "rgba(234, 236, 244, 1)",
