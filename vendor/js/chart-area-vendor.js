@@ -32,7 +32,7 @@ var ctx = document.getElementById("myAreaChart");
 var myLineChart = new Chart(ctx, {
   type: 'line',
   data: {
-    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+    labels: ["SUPERSALES INC.", "Custom Frames, Inc.", "Chicago City Saddles", "Victory Bikes", "Professional Athletic Consultants", "Compete Enterprises, Inc", "Circuit Cycles", "Compete, Inc.", "First Rate Bicycles", "Electronic Bike Repair & Supplies"],
     datasets: [{
       label: "Earnings",
       lineTension: 0.3,
@@ -46,7 +46,7 @@ var myLineChart = new Chart(ctx, {
       pointHoverBorderColor: "rgba(78, 115, 223, 1)",
       pointHitRadius: 10,
       pointBorderWidth: 2,
-      data: [0, 10000, 5000, 15000, 10000, 20000, 15000, 25000, 20000, 30000, 25000, 40000],
+      data: [250.000, 231.000, 196.000, 158.400, 156.2, 138.600, 138.600, 137.500, 135.300, 134.200],
     }],
   },
   options: {
