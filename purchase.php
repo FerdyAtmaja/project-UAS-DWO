@@ -33,22 +33,29 @@
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Purchase</h1>
+                        <h1 class="h3 mb-0 text-gray-800">Pembelian</h1>
                         <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
                     </div>
 
                     <!-- Content Row -->
                     <div class="row">
 
-                        <!-- Earnings (Monthly) Card Example -->
+                        <!-- Earnings (Yearly) Card Example -->
                         <div class="col-xl-3 col-md-6 mb-4">
                             <div class="card border-left-primary shadow h-100 py-2">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                Earnings (Monthly)</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                                                Total Pembelian</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                                <?php
+                                                include "connect.php";
+                                                $query = mysqli_query($conn, 'SELECT count(distinct PurchaseOrderId) as count FROM fact_purchase');
+                                                    $row = mysqli_fetch_array($query);
+
+                                                    echo $row['count']?></div>
+
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-calendar fa-2x text-gray-300"></i>
@@ -65,8 +72,15 @@
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                                Earnings (Annual)</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">$215,000</div>
+                                                Penjualan Tahun ini </div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                            <?php
+                                                    $query = mysqli_query($conn,"SELECT COUNT(DISTINCT(f.PurchaseOrderId)) PurchaseOrder FROM fact_purchase f JOIN time t ON f.timeID=t.time_id WHERE t.tahun=2004");
+                                                        while($row=mysqli_fetch_array($query)){
+                                                            echo number_format($row['PurchaseOrder'],0,".",",");
+                                                    }
+                                                ?>
+                                            </div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
@@ -78,25 +92,23 @@
 
                         <!-- Earnings (Monthly) Card Example -->
                         <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-info shadow h-100 py-2">
+                            <div class="card border-left-primary shadow h-100 py-2">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Tasks
-                                            </div>
-                                            <div class="row no-gutters align-items-center">
-                                                <div class="col-auto">
-                                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">50%</div>
-                                                </div>
-                                                <div class="col">
-                                                    <div class="progress progress-sm mr-2">
-                                                        <div class="progress-bar bg-info" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                                Jenis Produk Terjual</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                                <?php
+                                                include "connect.php";
+                                                $query = mysqli_query($conn, 'SELECT count(distinct ProductID) as product FROM fact_purchase');
+                                                    $row = mysqli_fetch_array($query);
+
+                                                    echo $row['product']?></div>
+
                                         </div>
                                         <div class="col-auto">
-                                            <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -110,8 +122,15 @@
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                                Pending Requests</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
+                                                Penjualan Bulan Ini</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                            <?php
+                                                    $query = mysqli_query($conn,"SELECT COUNT(DISTINCT(f.PurchaseOrderId)) PurchaseOrder FROM fact_purchase f JOIN time t ON f.timeID=t.time_id WHERE t.tahun=2004 AND bulan=9");
+                                                        while($row=mysqli_fetch_array($query)){
+                                                            echo number_format($row['PurchaseOrder'],0,".",",");
+                                                    }
+                                                ?>
+                                            </div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-comments fa-2x text-gray-300"></i>
@@ -122,77 +141,88 @@
                         </div>
                     </div>
 
-                    <!-- Content Row -->
+                    <!-- Content Table -->
+                    <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">
+                                Data Pembelian
+                                </h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                        <thead>
+                                        <tr>
+                                            <th>Purchase Order ID</th>
+                                            <th>Ship Method ID</th>
+                                            <th>Product ID</th>
+                                            <th>Vendor ID </th>
+                                            <th>Time ID</th>
+                                            <th>Employee ID</th>
+                                            <th>Order Qty</th>
+                                            <th>Received Qty</th>
+                                            <th>Rejected Qty</th>
+                                            <th>Stocked Qty</th>
+                                            <th>Line Total</th>
+                                            <th>Status</th>
+                                            <th>Sub Total</th>
+                                            <th>Tax Amount</th>
+                                            <th>Freight</th>
 
-                    <div class="row">
+                                        </tr>
+                                        </thead>
+                                        <tfoot>
+                                        <tr>
+                                        <th>Purchase Order ID</th>
+                                            <th>Ship Method ID</th>
+                                            <th>Product ID</th>
+                                            <th>Vendor ID </th>
+                                            <th>Time ID</th>
+                                            <th>Employee ID</th>
+                                            <th>Order Qty</th>
+                                            <th>Received Qty</th>
+                                            <th>Rejected Qty</th>
+                                            <th>Stocked Qty</th>
+                                            <th>Line Total</th>
+                                            <th>Status</th>
+                                            <th>Sub Total</th>
+                                            <th>Tax Amt</th>
+                                            <th>Freight</th>
+                                        </tr>
+                                        </tfoot>
+                                        <tbody>
+                                        <?php
+                                            include "connect.php";
 
-                        <!-- Area Chart -->
-                        <div class="col-xl-8 col-lg-7">
-                            <div class="card shadow mb-4">
-                                <!-- Card Header - Dropdown -->
-                                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-primary">Earnings Overview</h6>
-                                    <div class="dropdown no-arrow">
-                                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
-                                            <div class="dropdown-header">Dropdown Header:</div>
-                                            <a class="dropdown-item" href="#">Action</a>
-                                            <a class="dropdown-item" href="#">Another action</a>
-                                            <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" href="#">Something else here</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Card Body -->
-                                <div class="card-body">
-                                    <div class="chart-area">
-                                        <canvas id="myAreaChart"></canvas>
-                                    </div>
+                                            $query = mysqli_query($conn, 'SELECT * FROM fact_purchase where PurchaseOrderID limit 500');
+                                            while ($data = mysqli_fetch_array($query)) {
+                                        ?>
+                                        <tr>
+                                            <td><?php echo $data['PurchaseOrderID'] ?></td>
+                                            <td><?php echo $data['ShipMethodID'] ?></td>
+                                            <td><?php echo $data['ProductID'] ?></td>
+                                            <td><?php echo $data['VendorID'] ?></td>
+                                            <td><?php echo $data['TimeID'] ?></td>
+                                            <td><?php echo $data['EmployeeID'] ?></td>
+                                            <td><?php echo $data['OrderQty'] ?></td>
+                                            <td><?php echo $data['ReceivedQty'] ?></td>
+                                            <td><?php echo $data['RejectedQty'] ?></td>
+                                            <td><?php echo $data['StockedQty'] ?></td>
+                                            <td><?php echo $data['LineTotal'] ?></td>
+                                            <td><?php echo $data['Status'] ?></td>
+                                            <td><?php echo $data['SubTotal'] ?></td>
+                                            <td><?php echo $data['TaxAmt'] ?></td>
+                                            <td><?php echo $data['Freight'] ?></td>
+                                            
+                                        </tr>
+                                        <?php 
+                                            }
+                                        ?>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
-
-                        <!-- Pie Chart -->
-                        <div class="col-xl-4 col-lg-5">
-                            <div class="card shadow mb-4">
-                                <!-- Card Header - Dropdown -->
-                                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-primary">Revenue Sources</h6>
-                                    <div class="dropdown no-arrow">
-                                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
-                                            <div class="dropdown-header">Dropdown Header:</div>
-                                            <a class="dropdown-item" href="#">Action</a>
-                                            <a class="dropdown-item" href="#">Another action</a>
-                                            <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" href="#">Something else here</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Card Body -->
-                                <div class="card-body">
-                                    <div class="chart-pie pt-4 pb-2">
-                                        <canvas id="myPieChart"></canvas>
-                                    </div>
-                                    <div class="mt-4 text-center small">
-                                        <span class="mr-2">
-                                            <i class="fas fa-circle text-primary"></i> Direct
-                                        </span>
-                                        <span class="mr-2">
-                                            <i class="fas fa-circle text-success"></i> Social
-                                        </span>
-                                        <span class="mr-2">
-                                            <i class="fas fa-circle text-info"></i> Referral
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 
                 </div>
                 <!-- /.container-fluid -->
@@ -223,12 +253,14 @@
 
     <!-- Page level plugins -->
     <script src="vendor/chart.js/Chart.min.js"></script>
+    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
     <!-- Page level custom scripts -->
-    <script src="js/demo/chart-area-demo.js"></script>
-    <script src="js/demo/chart-pie-demo.js"></script>
+    <script src="js/demo/datatables-demo.js"></script>
 
 
 </body>
 
+</script>   
 </html>
