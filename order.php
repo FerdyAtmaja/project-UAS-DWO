@@ -213,6 +213,7 @@
                                 <thead>
                                     <tr>
                                         <th>Sales ID</th>
+                                        <th>Product ID</th>
                                         <th>Order Qty</th>
                                         <th>Unit Price</th>
                                         <th>Line Total</th>
@@ -221,6 +222,7 @@
                                 <tfoot>
                                     <tr>
                                         <th>Sales ID</th>
+                                        <th>Product ID</th>
                                         <th>Order Qty</th>
                                         <th>Unit Price</th>
                                         <th>Line Total</th>
@@ -235,6 +237,7 @@
                                     ?>
                                         <tr>
                                             <td><?php echo $data['SalesID'] ?></td>
+                                            <td><?php echo $data['ProductID'] ?></td>
                                             <td><?php echo $data['OrderQty'] ?></td>
                                             <td><?php echo $data['UnitPrice'] ?></td>
                                             <td><?php echo $data['LineTotal'] ?></td>
