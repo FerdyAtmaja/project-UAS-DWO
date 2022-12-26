@@ -157,40 +157,42 @@
                                 </div>
                                 <div class="mt-4 text-center small">
                                     <?php
-                                    $sql = mysqli_query($conn, "SELECT DISTINCT(customerid), Sum(orderqty) AS jumlah FROM fact_sales GROUP BY customerid ORDER BY jumlah DESC limit 10");
-                                    while ($data = mysqli_fetch_array($sql)) {
-                                        $customerID[] = $data['customerid'];
+                                    $produk = mysqli_query($conn, "SELECT DISTINCT(customerid), Sum(orderqty) AS jumlah FROM fact_sales GROUP BY customerid ORDER BY jumlah DESC limit 10");
+                                    while ($data = mysqli_fetch_array($produk)) {
+                                        $sql = mysqli_query($conn, "SELECT c.AccountNumber AS accountNumber ,Sum(fs.orderqty) AS jumlah FROM customer c JOIN fact_sales fs ON c.customerid=fs.customerid WHERE fs.customerid='" . $data['customerid'] . "'");
+                                        $data = $sql->fetch_array();
+                                        $accountNumber [] = $data['accountNumber'];
                                     }
                                     ?>
                                     <span class="mr-2">
-                                        <i class="fas fa-circle text-primary"></i> <?php echo $customerID[0]; ?>
+                                        <i class="fas fa-circle" style="color: #d94f00;"></i> <?php echo $accountNumber[0]; ?>
                                     </span>
                                     <span class="mr-2">
-                                        <i class="fas fa-circle text-success"></i> <?php echo $customerID[1]; ?>
+                                        <i class="fas fa-circle" style="color: #d9c300;"></i> <?php echo $accountNumber[1]; ?>
                                     </span>
                                     <span class="mr-2">
-                                        <i class="fas fa-circle text-info"></i> <?php echo $customerID[2]; ?>
+                                        <i class="fas fa-circle" style="color: #94d900;"></i> <?php echo $accountNumber[2]; ?>
                                     </span>
                                     <span class="mr-2">
-                                        <i class="fas fa-circle text-Warning"></i> <?php echo $customerID[3]; ?>
+                                        <i class="fas fa-circle" style="color: #00d953;"></i> <?php echo $accountNumber[3]; ?>
                                     </span>
                                     <span class="mr-2">
-                                        <i class="fas fa-circle text-Danger"></i> <?php echo $customerID[4]; ?>
+                                        <i class="fas fa-circle" style="color: #00d9c7;"></i> <?php echo $accountNumber[4]; ?>
                                     </span>
                                     <span class="mr-2">
-                                        <i class="fas fa-circle text-Secondary"></i> <?php echo $customerID[5]; ?>
+                                        <i class="fas fa-circle" style="color: #0028d9;"></i> <?php echo $accountNumber[5]; ?>
                                     </span>
                                     <span class="mr-2">
-                                        <i class="fas fa-circle text-Light"></i> <?php echo $customerID[6]; ?>
+                                        <i class="fas fa-circle" style="color: #8900d9;"></i> <?php echo $accountNumber[6]; ?>
                                     </span>
                                     <span class="mr-2">
-                                        <i class="fas fa-circle text-Dark"></i> <?php echo $customerID[7]; ?>
+                                        <i class="fas fa-circle" style="color: #d90033;"></i> <?php echo $accountNumber[7]; ?>
                                     </span>
                                     <span class="mr-2">
-                                        <i class="fas fa-circle text-info"></i> <?php echo $customerID[8]; ?>
+                                        <i class="fas fa-circle" style="color: #969696;"></i> <?php echo $accountNumber[8]; ?>
                                     </span>
                                     <span class="mr-2">
-                                        <i class="fas fa-circle text-info"></i> <?php echo $customerID[9]; ?>
+                                        <i class="fas fa-circle" style="color: #ff26ac;"></i> <?php echo $accountNumber[9]; ?>
                                     </span>
                                 </div>
                             </div>
@@ -288,9 +290,9 @@
     // Pemanggilan Data untuk Donut Chart
     $produk = mysqli_query($conn, "SELECT DISTINCT(customerid), Sum(orderqty) AS jumlah FROM fact_sales GROUP BY customerid ORDER BY jumlah DESC limit 10");
     while ($data = mysqli_fetch_array($produk)) {
-        $customerID[] = $data['customerid'];
-        $sql = mysqli_query($conn, "SELECT Sum(orderqty) AS jumlah FROM fact_sales WHERE customerid='" . $data['customerid'] . "'");
+        $sql = mysqli_query($conn, "SELECT c.AccountNumber AS accountNumber ,Sum(fs.orderqty) AS jumlah FROM customer c JOIN fact_sales fs ON c.customerid=fs.customerid WHERE fs.customerid='" . $data['customerid'] . "'");
         $data = $sql->fetch_array();
+        $accountNumber [] = $data['accountNumber'];
         $jumlah[] = $data['jumlah'];
     }
 
@@ -448,11 +450,11 @@
         var myPieChart = new Chart(ctx, {
             type: "doughnut",
             data: {
-                labels: <?php echo json_encode($customerID); ?>,
+                labels: <?php echo json_encode($accountNumber); ?>,
                 datasets: [{
                     data: <?php echo json_encode($jumlah); ?>,
-                    backgroundColor: ["#4e73df", "#1cc88a", "#36b9cc", "#f6c23e ", "#e74a3b ", "#858796 ", "#f8f9fc ", "#5a5c69 ", "#cccccc ", "#827717 "],
-                    hoverBackgroundColor: ["#2e59d9", "#17a673", "#2c9faf"],
+                    backgroundColor: ["#d94f00", "#d9c300", "#94d900", "#00d953", "#00d9c7 ", "#0028d9 ", "#8900d9", "#d90033", "#969696 ", "#ff26ac"],
+                    hoverBackgroundColor: ["#fa8948", "#f7e439", "#bef743", "#4af78c", "#52faec", "#4e6efc", "#bd4dff", "#ff4773","black","#ff1c4d"],
                     hoverBorderColor: "rgba(234, 236, 244, 1)",
                 }, ],
             },
