@@ -49,10 +49,10 @@
                                         <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                             Total Vendor (All Time)</div>
                                         <div class="h5 mb-0 font-weight-bold text-gray-800"><?php
-                                                                                            include "connect.php";
-                                                                                            $query = mysqli_query($conn, 'SELECT count(*) as count FROM vendor');
-                                                                                            $row = mysqli_fetch_array($query);
-                                                                                            echo $row['count'] ?></div>
+                                            include "connect.php";
+                                            $query = mysqli_query($conn, 'SELECT count(*) as count FROM vendor');
+                                            $row = mysqli_fetch_array($query);
+                                            echo $row['count'] ?></div>
                                     </div>
                                     <div class="col-auto">
                                         <i class="fas fa-calendar fa-2x text-gray-300"></i>
@@ -71,11 +71,10 @@
                                         <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                             Total Product (All Time)</div>
                                         <div class="h5 mb-0 font-weight-bold text-gray-800"><?php
-                                                                                            include "connect.php";
-
-                                                                                            $query = mysqli_query($conn, 'SELECT count(*) as count FROM product');
-                                                                                            $row = mysqli_fetch_array($query);
-                                                                                            echo $row['count'] ?></div>
+                                            include "connect.php";
+                                            $query = mysqli_query($conn, 'SELECT count(*) as count FROM product');
+                                            $row = mysqli_fetch_array($query);
+                                            echo $row['count'] ?></div>
                                     </div>
                                     <div class="col-auto">
                                         <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
@@ -121,11 +120,13 @@
                                             <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
                                                 Rata-Rata Pengeluaran Kepada Vendor (Annually)</div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800"><?php
-                                            include "connect.php";
-
-                                            $query = mysqli_query($conn, 'SELECT ROUND(SUM(SubTotal)/3, 2) as avg FROM fact_purchase');
-                                            $row = mysqli_fetch_array($query);
-                                            echo '$' . $row['avg']?></div>
+                                                include "connect.php";
+                                                $query = mysqli_query($conn, 'SELECT ROUND(SUM(SubTotal)/3, 2) as avg FROM fact_purchase');
+                                                while ($row = mysqli_fetch_array($query)) {
+                                                    echo '$'.number_format($row['avg'], 0, ".", ",");
+                                                }?>
+                                                </div>
+                                                
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-comments fa-2x text-gray-300"></i>
@@ -297,8 +298,6 @@
         </div>
         <!-- End of Page Wrapper -->
 
-
-
         <!-- Bootstrap core JavaScript-->
         <script src="vendor/jquery/jquery.min.js"></script>
         <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -311,59 +310,13 @@
 
         <!-- Page level plugins -->
         <script src="vendor/chart.js/Chart.min.js"></script>
+        <script src="vendor/chart.js/Chart.min.js"></script>
+        <script src="vendor/datatables/jquery.dataTables.min.js"></script>
+        <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
         <!-- Page level custom scripts -->
         <script src="vendor/js/chart-area-vendor.js"></script>
         <script src="vendor/js/chart-pie-vendor.js"></script>
-
-
-        <script src="https://code.highcharts.com/highcharts.js"></script>
-        <script src="https://code.highcharts.com/modules/data.js"></script>
-        <script src="https://code.highcharts.com/modules/drilldown.js"></script>
-        <script src="https://code.highcharts.com/modules/exporting.js"></script>
-        <script src="https://code.highcharts.com/modules/export-data.js"></script>
-        <script src="https://code.highcharts.com/modules/accessibility.js"></script>
-        <!-- <link rel="stylesheet" href="/drilldown.css"/> -->
-        <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.js"></script>
-        <!---->
-
-
-        <!-- DataTables  & Plugins -->
-        <script src="../../plugins/datatables/jquery.dataTables.min.js"></script>
-        <script src="../../plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
-        <script src="../../plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
-        <script src="../../plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
-        <script src="../../plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
-        <script src="../../plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
-        <script src="../../plugins/jszip/jszip.min.js"></script>
-        <script src="../../plugins/pdfmake/pdfmake.min.js"></script>
-        <script src="../../plugins/pdfmake/vfs_fonts.js"></script>
-        <script src="../../plugins/datatables-buttons/js/buttons.html5.min.js"></script>
-        <script src="../../plugins/datatables-buttons/js/buttons.print.min.js"></script>
-        <script src="../../plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
-
-        <script>
-            $(function() {
-                $("#dataTable").DataTable({
-                    "responsive": true,
-                    "lengthChange": false,
-                    "autoWidth": false,
-                    "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-                }).buttons().container().appendTo('#dataTable_wrapper .col-md-6:eq(0)');
-                $('#dataTable').DataTable({
-                    "paging": true,
-                    "lengthChange": false,
-                    "searching": false,
-                    "ordering": true,
-                    "info": true,
-                    "autoWidth": false,
-                    "responsive": true,
-                });
-            });
-        </script>
-
-
+        <script src="js/demo/datatables-demo.js"></script>
     </body>
-
 </html>

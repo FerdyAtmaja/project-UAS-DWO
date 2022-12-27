@@ -159,40 +159,42 @@
                                 </div>
                                 <div class="mt-4 text-center small">
                                     <?php
-                                    $sql = mysqli_query($conn, "SELECT ProductID, Sum(orderqty) AS jumlah FROM fact_sales GROUP BY ProductID ORDER BY jumlah DESC limit 10");
-                                    while ($data = mysqli_fetch_array($sql)) {
-                                        $ProductID[] =  $data['ProductID'];
+                                    $produk = mysqli_query($conn, "SELECT DISTINCT(productid), Sum(orderqty) AS jumlah FROM fact_sales GROUP BY productid ORDER BY jumlah DESC limit 10");
+                                    while ($data = mysqli_fetch_array($produk)) {
+                                        $sql = mysqli_query($conn, "SELECT p.name AS name ,Sum(fs.orderqty) AS jumlah FROM product p JOIN fact_sales fs ON p.productid=fs.productid WHERE fs.productid='" . $data['productid'] . "'");
+                                        $data = $sql->fetch_array();
+                                        $name [] = $data['name'];
                                     }
                                     ?>
                                     <span class="mr-2">
-                                        <i class="fas fa-circle text-primary"></i> <?php echo $ProductID[0]; ?>
+                                        <i class="fas fa-circle" style="color: #d94f00;"></i> <?php echo $name[0]; ?>
                                     </span>
                                     <span class="mr-2">
-                                        <i class="fas fa-circle text-success"></i> <?php echo $ProductID[1]; ?>
+                                        <i class="fas fa-circle" style="color: #d9c300;"></i> <?php echo $name[1]; ?>
                                     </span>
                                     <span class="mr-2">
-                                        <i class="fas fa-circle text-info"></i> <?php echo $ProductID[2]; ?>
+                                        <i class="fas fa-circle" style="color: #94d900;"></i> <?php echo $name[2]; ?>
                                     </span>
                                     <span class="mr-2">
-                                        <i class="fas fa-circle text-Warning"></i> <?php echo $ProductID[3]; ?>
+                                        <i class="fas fa-circle" style="color: #00d953;"></i> <?php echo $name[3]; ?>
                                     </span>
                                     <span class="mr-2">
-                                        <i class="fas fa-circle text-Danger"></i> <?php echo $ProductID[4]; ?>
+                                        <i class="fas fa-circle" style="color: #00d9c7;"></i> <?php echo $name[4]; ?>
                                     </span>
                                     <span class="mr-2">
-                                        <i class="fas fa-circle text-Secondary"></i> <?php echo $ProductID[5]; ?>
+                                        <i class="fas fa-circle" style="color: #0028d9;"></i> <?php echo $name[5]; ?>
                                     </span>
                                     <span class="mr-2">
-                                        <i class="fas fa-circle text-Light"></i> <?php echo $ProductID[6]; ?>
+                                        <i class="fas fa-circle" style="color: #8900d9;"></i> <?php echo $name[6]; ?>
                                     </span>
                                     <span class="mr-2">
-                                        <i class="fas fa-circle text-Dark"></i> <?php echo $ProductID[7]; ?>
+                                        <i class="fas fa-circle" style="color: #d90033;"></i> <?php echo $name[7]; ?>
                                     </span>
                                     <span class="mr-2">
-                                        <i class="fas fa-circle text-info"></i> <?php echo $ProductID[8]; ?>
+                                        <i class="fas fa-circle" style="color: #969696;"></i> <?php echo $name[8]; ?>
                                     </span>
                                     <span class="mr-2">
-                                        <i class="fas fa-circle text-info"></i> <?php echo $ProductID[9]; ?>
+                                        <i class="fas fa-circle" style="color: #ff26ac;"></i> <?php echo $name[9]; ?>
                                     </span>
                                 </div>
                             </div>
@@ -213,6 +215,7 @@
                                 <thead>
                                     <tr>
                                         <th>Sales ID</th>
+                                        <th>Product ID</th>
                                         <th>Order Qty</th>
                                         <th>Unit Price</th>
                                         <th>Line Total</th>
@@ -221,6 +224,7 @@
                                 <tfoot>
                                     <tr>
                                         <th>Sales ID</th>
+                                        <th>Product ID</th>
                                         <th>Order Qty</th>
                                         <th>Unit Price</th>
                                         <th>Line Total</th>
@@ -235,6 +239,7 @@
                                     ?>
                                         <tr>
                                             <td><?php echo $data['SalesID'] ?></td>
+                                            <td><?php echo $data['ProductID'] ?></td>
                                             <td><?php echo $data['OrderQty'] ?></td>
                                             <td><?php echo $data['UnitPrice'] ?></td>
                                             <td><?php echo $data['LineTotal'] ?></td>
@@ -293,9 +298,9 @@
     // Pemanggilan Data untuk Donut Chart
     $produk = mysqli_query($conn, "SELECT DISTINCT(productid), Sum(orderqty) AS jumlah FROM fact_sales GROUP BY productid ORDER BY jumlah DESC limit 10");
     while ($data = mysqli_fetch_array($produk)) {
-        $ProductID[] = $data['productid'];
-        $sql = mysqli_query($conn, "SELECT Sum(orderqty) AS jumlah FROM fact_sales WHERE productid='" . $data['productid'] . "'");
+        $sql = mysqli_query($conn, "SELECT p.name AS name ,Sum(fs.orderqty) AS jumlah FROM product p JOIN fact_sales fs ON p.productid=fs.productid WHERE fs.productid='" . $data['productid'] . "'");
         $data = $sql->fetch_array();
+        $name [] = $data['name'];
         $jumlah[] = $data['jumlah'];
     }
 
@@ -453,11 +458,11 @@
         var myPieChart = new Chart(ctx, {
             type: "doughnut",
             data: {
-                labels: <?php echo json_encode($ProductID); ?>,
+                labels: <?php echo json_encode($name); ?>,
                 datasets: [{
                     data: <?php echo json_encode($jumlah); ?>,
-                    backgroundColor: ["#4e73df", "#1cc88a", "#36b9cc", "#f6c23e ", "#e74a3b ", "#858796 ", "#f8f9fc ", "#5a5c69 ", "#cccccc ", "#827717 "],
-                    hoverBackgroundColor: ["#2e59d9", "#17a673", "#2c9faf"],
+                    backgroundColor: ["#d94f00", "#d9c300", "#94d900", "#00d953", "#00d9c7 ", "#0028d9 ", "#8900d9", "#d90033", "#969696 ", "#ff26ac"],
+                    hoverBackgroundColor: ["#fa8948", "#f7e439", "#bef743", "#4af78c", "#52faec", "#4e6efc", "#bd4dff", "#ff4773","black","#ff1c4d"],
                     hoverBorderColor: "rgba(234, 236, 244, 1)",
                 }, ],
             },
