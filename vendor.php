@@ -123,7 +123,7 @@
 
                                             $query = mysqli_query($conn, 'SELECT ROUND(AVG(f.SubTotal), 2) avg FROM fact_purchase f JOIN time t ON f.timeID=t.time_id WHERE t.tahun=2004');
                                             $row = mysqli_fetch_array($query);
-                                            echo '$' . $row['avg']?></div>
+                                            echo '$' . number_format($row['avg'], 0, ".", ",")?></div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-comments fa-2x text-gray-300"></i>
