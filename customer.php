@@ -228,7 +228,7 @@
                                     <?php
                                     include "connect.php";
 
-                                    $query = mysqli_query($conn, 'SELECT * FROM customer where CustomerID');
+                                    $query = mysqli_query($conn, 'SELECT * FROM customer where CustomerID < 500');
                                     while ($data = mysqli_fetch_array($query)) {
                                     ?>
                                         <tr>
