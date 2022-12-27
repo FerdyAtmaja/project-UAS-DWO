@@ -49,10 +49,10 @@
                                         <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                             Total Vendor (All Time)</div>
                                         <div class="h5 mb-0 font-weight-bold text-gray-800"><?php
-                                            include "connect.php";
-                                            $query = mysqli_query($conn, 'SELECT count(*) as count FROM vendor');
-                                            $row = mysqli_fetch_array($query);
-                                            echo $row['count'] ?></div>
+                                                                                            include "connect.php";
+                                                                                            $query = mysqli_query($conn, 'SELECT count(*) as count FROM vendor');
+                                                                                            $row = mysqli_fetch_array($query);
+                                                                                            echo $row['count'] ?></div>
                                     </div>
                                     <div class="col-auto">
                                         <i class="fas fa-calendar fa-2x text-gray-300"></i>
@@ -71,10 +71,11 @@
                                         <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                             Total Product (All Time)</div>
                                         <div class="h5 mb-0 font-weight-bold text-gray-800"><?php
-                                            include "connect.php";
-                                            $query = mysqli_query($conn, 'SELECT count(*) as count FROM product');
-                                            $row = mysqli_fetch_array($query);
-                                            echo $row['count'] ?></div>
+                                                                                            include "connect.php";
+
+                                                                                            $query = mysqli_query($conn, 'SELECT count(*) as count FROM product');
+                                                                                            $row = mysqli_fetch_array($query);
+                                                                                            echo $row['count'] ?></div>
                                     </div>
                                     <div class="col-auto">
                                         <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
@@ -87,25 +88,23 @@
                     <!-- Avarage Purchase (Monthly) Card Example -->
                     <div class="col-xl-3 col-md-6 mb-4">
                             <div class="card border-left-info shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Jumlah Produk yang Dibeli Pada Vendor (Monthly)
-                                            </div>
-                                            <div class="row no-gutters align-items-center">
-                                                <div class="col-auto">
-                                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">2,7%</div>
-                                                </div>
-                                                <div class="col">
-                                                    <div class="progress progress-sm mr-2">
-                                                        <div class="progress-bar bg-info" role="progressbar" style="width: 5%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                                                    </div>
-                                                </div>
-                                            </div>
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                            Jumlah Produk yang Dibeli Pada Tahun Terakhir (2003)</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                            <?php
+                                            $query = mysqli_query($conn, "SELECT SUM(f.OrderQty) kuantitas FROM fact_purchase f JOIN time t ON f.timeID=t.time_id WHERE t.tahun=2004");
+                                            while ($row = mysqli_fetch_array($query)) {
+                                                echo number_format($row['kuantitas'], 0, ".", ",");
+                                            }
+                                            ?>
                                         </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
-                                        </div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="fas fa-comments fa-2x text-gray-300"></i>
+                                    </div>
                                     </div>
                                 </div>
                             </div>
@@ -118,15 +117,13 @@
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                                Rata-Rata Pengeluaran Kepada Vendor (Annually)</div>
+                                                Rata-Rata Pengeluaran Kepada Vendor</div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800"><?php
-                                                include "connect.php";
-                                                $query = mysqli_query($conn, 'SELECT ROUND(SUM(SubTotal)/3, 2) as avg FROM fact_purchase');
-                                                while ($row = mysqli_fetch_array($query)) {
-                                                    echo '$'.number_format($row['avg'], 0, ".", ",");
-                                                }?>
-                                                </div>
-                                                
+                                            include "connect.php";
+
+                                            $query = mysqli_query($conn, 'SELECT ROUND(AVG(f.SubTotal), 2) avg FROM fact_purchase f JOIN time t ON f.timeID=t.time_id WHERE t.tahun=2004');
+                                            $row = mysqli_fetch_array($query);
+                                            echo '$' . number_format($row['avg'], 0, ".", ",")?></div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-comments fa-2x text-gray-300"></i>
@@ -298,6 +295,8 @@
         </div>
         <!-- End of Page Wrapper -->
 
+
+
         <!-- Bootstrap core JavaScript-->
         <script src="vendor/jquery/jquery.min.js"></script>
         <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -310,13 +309,59 @@
 
         <!-- Page level plugins -->
         <script src="vendor/chart.js/Chart.min.js"></script>
-        <script src="vendor/chart.js/Chart.min.js"></script>
-        <script src="vendor/datatables/jquery.dataTables.min.js"></script>
-        <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
         <!-- Page level custom scripts -->
         <script src="vendor/js/chart-area-vendor.js"></script>
         <script src="vendor/js/chart-pie-vendor.js"></script>
-        <script src="js/demo/datatables-demo.js"></script>
+
+
+        <script src="https://code.highcharts.com/highcharts.js"></script>
+        <script src="https://code.highcharts.com/modules/data.js"></script>
+        <script src="https://code.highcharts.com/modules/drilldown.js"></script>
+        <script src="https://code.highcharts.com/modules/exporting.js"></script>
+        <script src="https://code.highcharts.com/modules/export-data.js"></script>
+        <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+        <!-- <link rel="stylesheet" href="/drilldown.css"/> -->
+        <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.js"></script>
+        <!---->
+
+
+        <!-- DataTables  & Plugins -->
+        <script src="../../plugins/datatables/jquery.dataTables.min.js"></script>
+        <script src="../../plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+        <script src="../../plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+        <script src="../../plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+        <script src="../../plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+        <script src="../../plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+        <script src="../../plugins/jszip/jszip.min.js"></script>
+        <script src="../../plugins/pdfmake/pdfmake.min.js"></script>
+        <script src="../../plugins/pdfmake/vfs_fonts.js"></script>
+        <script src="../../plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+        <script src="../../plugins/datatables-buttons/js/buttons.print.min.js"></script>
+        <script src="../../plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+
+        <script>
+            $(function() {
+                $("#dataTable").DataTable({
+                    "responsive": true,
+                    "lengthChange": false,
+                    "autoWidth": false,
+                    "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+                }).buttons().container().appendTo('#dataTable_wrapper .col-md-6:eq(0)');
+                $('#dataTable').DataTable({
+                    "paging": true,
+                    "lengthChange": false,
+                    "searching": false,
+                    "ordering": true,
+                    "info": true,
+                    "autoWidth": false,
+                    "responsive": true,
+                });
+            });
+        </script>
+
+
     </body>
+
 </html>

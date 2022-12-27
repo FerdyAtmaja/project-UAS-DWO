@@ -121,9 +121,9 @@ foreach ($data_det[0] as $a) {
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
     <script src="https://code.highcharts.com/modules/export-data.js"></script>
     <script src="https://code.highcharts.com/modules/accessibility.js"></script>
-    
+
     <link rel="stylesheet" href="/drilldown.css" />
-    
+
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.js">
 
@@ -145,7 +145,7 @@ foreach ($data_det[0] as $a) {
                 type: 'pie'
             },
             title: {
-                text: 'Klik di potongan kue untuk melihat detil nilai penjualan setiap wilayah berdasarkan bulan'
+                text: ''
             },
             subtitle: {
                 text: ''
